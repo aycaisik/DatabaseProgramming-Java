@@ -3,7 +3,8 @@ import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) throws SQLException {Connection connection = null;
+    public static void main(String[] args) throws SQLException {
+        Connection connection = null;
         DbHelper helper = new DbHelper();
         PreparedStatement statement = null;
         ResultSet resultSet;
@@ -11,10 +12,11 @@ public class Main {
 
         try {
             connection = helper.getConnection();
-            String sql = "update city set population=8000 where id=4081";
+            String sql = "delete from city where id = ?";
             statement = connection.prepareStatement(sql);
+            statement.setInt(1,4081);
             int result = statement.executeUpdate();
-            System.out.println("kayıt güncellendi");
+            System.out.println("kayıt silindi");
 
         } catch (SQLException e) {
             helper.showErrorMessage(e);
@@ -23,6 +25,7 @@ public class Main {
             statement.close();
             connection.close();
         }
+
 
 
     }
@@ -81,6 +84,33 @@ public class Main {
             statement.close();
             connection.close();
         }
+
+
+    }
+
+    public void  updateData() throws  SQLException{
+        Connection connection = null;
+        DbHelper helper = new DbHelper();
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+
+
+        try {
+            connection = helper.getConnection();
+            String sql = "update city set population=8000 where id=4081";
+            statement = connection.prepareStatement(sql);
+            int result = statement.executeUpdate();
+            System.out.println("kayıt güncellendi");
+
+        } catch (SQLException e) {
+            helper.showErrorMessage(e);
+        }
+        finally {
+            statement.close();
+            connection.close();
+        }
+
+
 
 
     }
